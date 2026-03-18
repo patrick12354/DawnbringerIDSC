@@ -1,4 +1,4 @@
-# 🫀 HeartSPECT Segmentation Project
+# 👁️ CorVision: Left Ventricle Segmentation
 
 [![Live Interactive Prototype!](https://img.shields.io/badge/Live_Prototype-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://heartspect.streamlit.app/)
 

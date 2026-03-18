@@ -1,6 +1,6 @@
 @echo off
 echo ===========================================
-echo   🫀 Heart SPECT AI - Prototype Launcher
+echo   👁️ CorVision Engine Launcher
 echo ===========================================
 echo.
 echo Menjalankan aplikasi Streamlit...

@@ -1,4 +1,4 @@
-nse# 🫀 Heart SPECT Segmentation — Prototype
+# 👁️ CorVision Prototype Engine
 
 [![Try Live Prototype](https://img.shields.io/badge/TRY_LIVE_PROTOTYPE-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://heartspect.streamlit.app/)
 

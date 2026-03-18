@@ -22,8 +22,8 @@ CHECKPOINT_PATH = os.path.join(PROJECT_ROOT, "models", "best_model.pth")
 SAMPLE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sample_data")
 
 st.set_page_config(
-    page_title="Heart SPECT AI",
-    page_icon="🫀",
+    page_title="CorVision Prototype",
+    page_icon="👁️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -248,10 +248,24 @@ def show_landing_page():
     """Landing page view for product pitching."""
     
     # --- HERO SECTION ---
+    st.markdown("<br>", unsafe_allow_html=True)
+        
+    try:
+        import base64
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "logo.png"), "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode()
+            st.markdown(f'''
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: -10px;">
+                <img src="data:image/png;base64,{encoded_string}" style="max-width: 140px; height: auto;" />
+            </div>
+            ''', unsafe_allow_html=True)
+    except Exception:
+        pass # fallback if logo is missing
+
     st.markdown("""
-        <div class="hero-container reveal visible">
-            <div class="hero-label">PROTOTYPE AI KESEHATAN</div>
-            <h1 class="hero-title">Akurasi Klinis dalam<br>Tiga Dimensi</h1>
+        <div class="hero-container reveal visible" style="padding-top: 1rem;">
+            <div class="hero-label">CV | MEDICAL AI ENGINE</div>
+            <h1 class="hero-title">CorVision</h1>
             <p class="hero-subtitle">Meningkatkan kualitas diagnosis kardiovaskular dengan segmentasi volumetrik 3D U-Net mutakhir otomatis pada jaringan pencitraan Myocardial Perfusion SPECT.</p>
         </div>
     """, unsafe_allow_html=True)
@@ -440,7 +454,7 @@ def show_app_page():
     st.sidebar.markdown("---")
     
     # Header
-    st.markdown('<h2 class="main-title" style="font-size:2rem;">🔬 Prototype Engine</h2>',
+    st.markdown('<h2 class="main-title" style="font-size:2rem;">👁️ CorVision Engine</h2>',
                 unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Run segmentation interactively</p>',
                 unsafe_allow_html=True)
