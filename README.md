@@ -1,6 +1,6 @@
-# 🌅 Dawnbringer IDSC — AI for Medicine: A Proof of Concept
+# IDSC 2026 - Team Dawnbringer
 
-> *"The dawn of a new era — where Artificial Intelligence stands beside the physician."*
+> *"Mathematics and Hope in Healthcare"*
 
 [![SPECT Prototype](https://img.shields.io/badge/Live_Demo-CorVision_SPECT-FF4B4B?style=for-the-badge&logo=streamlit)](https://heartspect.streamlit.app/)
 
@@ -10,127 +10,159 @@
 
 ## English Version
 
-### 🎯 What Is This Repository?
+### What Is This Repository?
 
-**Dawnbringer** is a collection of independent AI/Machine Learning projects developed for the **IDSC (International Data Science Competition)**, all unified by a single, bold thesis:
+This repository contains the working submission materials of **Dawnbringer** for **IDSC 2026**. The work is built as a cross-modal proof of concept around a single thesis:
 
-> **Artificial Intelligence, trained on the right data, can learn to see what the human eye struggles to see — and will become an indispensable tool in modern medicine.**
+> **AI can provide hope in healthcare when it is trained rigorously on real biomedical data and designed to support earlier screening, better triage, and more consistent clinical decision support.**
 
-This repository is not just a competition submission. It is **a proof of concept for the future of AI-assisted healthcare**. Each sub-project tackles a distinct, real-world medical problem — demonstrating that AI is not limited to one specialty, but can generalize across fields, from cardiology to neurology to ophthalmology.
+This project is built as a broader proof for the competition: that carefully designed AI systems can extract meaningful clinical signals from noisy, heterogeneous, real-world biomedical datasets.
+
+This direction aligns with the IDSC 2026 theme, **Mathematics and Hope in Healthcare**, and with the competition emphasis on official biomedical datasets, methodological rigor, interpretability, and healthcare relevance.
 
 ---
 
-### 🧩 Projects in This Repository
+### Competition Context
+
+IDSC 2026 asks participants to work with official datasets and build computational solutions that are accurate, reproducible, clinically meaningful, and capable of delivering real hope through screening and decision support.
+
+This repository is organized as a portfolio of experiments across several medical modalities:
+- cardiac imaging
+- electrocardiography
+- EEG / brain-computer interface
+- ophthalmic imaging
+
+Together, these folders support one broader submission narrative: **AI can remain clinically useful even when medical data is noisy, difficult, and heterogeneous, as long as the modeling and evaluation are rigorous.**
+
+---
+
+### Projects in This Repository
 
 | Folder | Medical Domain | Task | Key Technology |
 |:---|:---|:---|:---|
-| [`SPECT/`](./SPECT/) | **Cardiology** | Left ventricle segmentation from Myocardial Perfusion SPECT scans | 3D U-Net (PyTorch) |
+| [`SPECT/`](./SPECT/) | **Cardiology / Nuclear Imaging** | Left ventricle segmentation from Myocardial Perfusion SPECT scans | 3D U-Net (PyTorch) |
 | [`bigP3BCI/`](./bigP3BCI/) | **Neurology / BCI** | Motor imagery EEG signal classification for Brain-Computer Interface | CNN / Deep Learning on EEG |
+| [`Brugada/`](./Brugada/) | **Cardiology / Electrophysiology** | Brugada syndrome detection from 12-lead ECG recordings | XGBoost + 1D CNN + Quality-Aware ResNet1D |
 | [`Hillel Yaffe Glaucoma/`](./Hillel%20Yaffe%20Glaucoma/) | **Ophthalmology** | Glaucoma detection from retinal fundus images | CNN / Transfer Learning |
 
 ---
 
-### 💡 The Core Argument: Why AI Will Transform Medicine
+### Why These Projects Exist
 
-For decades, medical diagnosis has depended entirely on human expertise — years of training, high cognitive load, and inevitably, human error and fatigue. AI does not replace this expertise. Rather, it *amplifies* it.
+Biomedical data in the real world is rarely clean. ECG can be noisy. EEG can be unstable. Retinal images vary in quality. Cardiac imaging can be small-scale, imbalanced, and difficult to annotate.
 
-Here is why each project in this repository matters:
+That is exactly why these projects matter.
 
-#### 🫀 1. SPECT — CorVision (Cardiology)
-Myocardial Perfusion SPECT is a nuclear imaging technique used to assess blood flow to the heart. Manually delineating the left ventricle in 3D volumetric scans is a time-consuming, expert-dependent process. Our **3D U-Net** model achieves:
-- **Dice Score: 91.4%** — near-perfect overlap with expert cardiologist annotations
-- **AUC-ROC: 0.99** — virtually perfect discrimination ability
-- **A live, interactive Streamlit prototype** deployed to the cloud
+Each folder explores the same larger belief from a different angle:
 
-This proves that AI can perform expert-level cardiac image segmentation — **reliably, instantly, at scale**.
+#### 1. SPECT: CorVision
+This project focuses on **myocardial perfusion SPECT**, where the task is to segment the left ventricle from 3D medical images. It demonstrates that AI can automate a difficult imaging workflow that normally requires time and expert attention. In practical terms, this can support faster cardiac analysis and more efficient downstream assessment.
 
-#### 🧠 2. bigP3BCI — Motor Imagery EEG (Neurology / BCI)
-Brain-Computer Interfaces open doors that were once permanently closed. For patients with ALS, locked-in syndrome, or severe spinal cord injuries, the ability to communicate or control assistive devices through thought alone is life-changing. Our EEG classification pipeline demonstrates that AI can decode intended motor actions from raw brain signals — a critical step toward **non-invasive, real-time BCI systems** accessible beyond specialized neurology labs.
+#### 2. bigP3BCI
+This project focuses on **EEG-based brain-computer interface signals**, especially in settings where patients may have severe motor limitations. The goal is to show that AI can still recover useful intention-related signals from difficult EEG data, opening the door to assistive communication systems that remain meaningful even under challenging physiological conditions.
 
-#### 👁️ 3. Hillel Yaffe Glaucoma (Ophthalmology)
-Glaucoma causes irreversible vision loss, often undetected until significant damage has already occurred. Specialist ophthalmologists are scarce in low-resource settings. Our fundus image classification model demonstrates that AI can screen for glaucoma from routine retinal photographs — enabling **population-scale, low-cost early detection** that could prevent millions of cases of preventable blindness worldwide.
+#### 3. Brugada
+This project focuses on **12-lead ECG classification for Brugada syndrome**, a clinically important condition associated with ventricular arrhythmia and sudden cardiac death. Here, the proof point is that AI can help detect subtle but high-stakes cardiac patterns and support earlier risk-oriented review of ECG recordings.
 
----
-
-### 🔭 A Vision for the Future
-
-These three projects, taken together, demonstrate a pattern:
-
-1. **AI learns from expert-labeled data** — absorbing knowledge that took doctors years to accumulate.
-2. **AI generalizes to new, unseen patients** — with performance metrics that approach or match clinical standards.
-3. **AI deploys at scale** — a trained model can run inference on thousands of scans per second, at a fraction of the cost of a specialist consultation.
-
-The implication is profound: **not every patient in the world needs access to a cardiologist, neurologist, or ophthalmologist — they need access to a device running an AI model trained by one.**
-
-This is the promise of AI in medicine. **Dawnbringer is the proof.**
+#### 4. Hillel Yaffe Glaucoma
+This project focuses on **fundus image analysis for glaucoma detection**. It supports the idea that AI can expand access to early screening in ophthalmology, especially in settings where specialist availability is limited and delayed diagnosis carries permanent consequences.
 
 ---
 
-### ⚖️ Disclaimer
+### The Core Proof We Are Building
 
-> ⚠️ **All projects in this repository are strictly for academic and research purposes.** None of the models, prototypes, or tools presented here are intended for, nor should they be used for, clinical diagnosis or medical treatment decisions without the oversight of qualified medical professionals.
+Taken together, these projects are meant to support four claims:
+
+1. **AI can learn from official biomedical datasets across very different modalities.**
+2. **AI can remain useful even when the underlying data is noisy, heterogeneous, or quality-sensitive.**
+3. **AI becomes far more credible when paired with strong validation, calibration, interpretability, and clinically relevant metrics.**
+4. **AI can provide practical hope in healthcare by helping clinicians screen earlier, review faster, and prioritize high-risk cases more effectively.**
+
+This repository should therefore be read as **Dawnbringer's proof-of-concept submission space for IDSC 2026**. The folders are individual technical studies, but together they build one larger argument.
+
+---
+
+### Disclaimer
+
+> **All projects in this repository are strictly for academic and research purposes.** None of the models, prototypes, or tools presented here are intended for clinical diagnosis or medical treatment decisions without the oversight of qualified medical professionals.
 
 ---
 ---
 
 ## Versi Bahasa Indonesia
 
-### 🎯 Apa Itu Repositori Ini?
+### Apa Itu Repositori Ini?
 
-**Dawnbringer** adalah kumpulan proyek AI/Machine Learning independen yang dikembangkan untuk **IDSC (International Data Science Competition)**, yang semuanya bersatu dalam satu tesis yang berani:
+Repositori ini berisi materi kerja submission milik **Dawnbringer** untuk **IDSC 2026**. Pekerjaan ini dibangun sebagai proof of concept lintas modalitas dengan satu tesis utama:
 
-> **Kecerdasan Buatan, yang dilatih dengan data yang tepat, dapat belajar untuk melihat apa yang sulit dilihat oleh mata manusia — dan akan menjadi alat yang sangat penting dalam dunia medis modern.**
+> **AI dapat membawa harapan dalam layanan kesehatan jika dilatih secara ketat pada data biomedis nyata dan dirancang untuk membantu skrining dini, triase yang lebih baik, serta dukungan keputusan klinis yang lebih konsisten.**
 
-Repositori ini bukan sekadar submission kompetisi. Ini adalah **bukti konsep untuk masa depan layanan kesehatan berbantuan AI**. Setiap sub-proyek menangani masalah medis nyata yang berbeda — membuktikan bahwa AI tidak terbatas pada satu spesialisasi, tetapi dapat digeneralisasikan lintas bidang, mulai dari kardiologi hingga neurologi dan oftalmologi.
+Proyek ini dibangun sebagai pembuktian yang lebih besar untuk kompetisi ini: bahwa sistem AI yang dirancang dengan baik dapat mengekstrak sinyal klinis yang bermakna dari dataset biomedis yang noisy, heterogen, dan menantang.
+
+Arah ini selaras dengan tema IDSC 2026, yaitu **Mathematics and Hope in Healthcare**, serta dengan penekanan kompetisi pada penggunaan dataset resmi, rigor metodologis, interpretabilitas, dan relevansi klinis.
 
 ---
 
-### 🧩 Proyek dalam Repositori Ini
+### Konteks Kompetisi
+
+IDSC 2026 meminta peserta untuk bekerja dengan dataset resmi dan membangun solusi komputasional yang akurat, reproducible, bermakna secara klinis, serta mampu memberi harapan nyata melalui skrining dan decision support.
+
+Repositori ini disusun sebagai portofolio eksperimen pada beberapa modalitas medis:
+- pencitraan jantung
+- elektrokardiografi
+- EEG / brain-computer interface
+- pencitraan oftalmologi
+
+Seluruh folder ini mendukung satu narasi submission yang lebih besar: **AI tetap bisa berguna secara klinis walaupun data medis bersifat noisy, sulit, dan heterogen, selama pemodelan dan evaluasinya dilakukan dengan rigor yang kuat.**
+
+---
+
+### Proyek dalam Repositori Ini
 
 | Folder | Domain Medis | Tugas | Teknologi Utama |
 |:---|:---|:---|:---|
-| [`SPECT/`](./SPECT/) | **Kardiologi** | Segmentasi ventrikel kiri dari citra Myocardial Perfusion SPECT | 3D U-Net (PyTorch) |
+| [`SPECT/`](./SPECT/) | **Kardiologi / Pencitraan Nuklir** | Segmentasi ventrikel kiri dari citra Myocardial Perfusion SPECT | 3D U-Net (PyTorch) |
 | [`bigP3BCI/`](./bigP3BCI/) | **Neurologi / BCI** | Klasifikasi sinyal EEG Motor Imagery untuk Brain-Computer Interface | CNN / Deep Learning pada EEG |
+| [`Brugada/`](./Brugada/) | **Kardiologi / Elektrofisiologi** | Deteksi sindrom Brugada dari rekaman ECG 12-lead | XGBoost + 1D CNN + Quality-Aware ResNet1D |
 | [`Hillel Yaffe Glaucoma/`](./Hillel%20Yaffe%20Glaucoma/) | **Oftalmologi** | Deteksi glaukoma dari citra fundus retina | CNN / Transfer Learning |
 
 ---
 
-### 💡 Argumen Utama: Mengapa AI Akan Mentransformasi Dunia Medis
+### Mengapa Proyek-Proyek Ini Dibuat
 
-Selama beberapa dekade, diagnosis medis sepenuhnya bergantung pada keahlian manusia — bertahun-tahun pelatihan, beban kognitif yang tinggi, dan tak terhindarkan, kesalahan manusia dan kelelahan. AI tidak menggantikan keahlian ini. Sebaliknya, AI *memperkuatnya*.
+Data biomedis di dunia nyata hampir tidak pernah benar-benar bersih. ECG bisa noisy. EEG bisa tidak stabil. Citra retina bisa bervariasi kualitasnya. Pencitraan jantung bisa berukuran kecil, tidak seimbang, dan sulit dianotasi.
 
-Berikut adalah alasan mengapa setiap proyek dalam repositori ini penting:
+Justru karena itu proyek-proyek ini penting.
 
-#### 🫀 1. SPECT — CorVision (Kardiologi)
-Myocardial Perfusion SPECT adalah teknik pencitraan nuklir yang digunakan untuk menilai aliran darah ke jantung. Mendelineasi ventrikel kiri secara manual dalam pemindaian volumetrik 3D adalah proses yang memakan waktu dan sangat bergantung pada keahlian. Model **3D U-Net** kami mencapai:
-- **Dice Score: 91.4%** — tumpang tindih yang hampir sempurna dengan anotasi dokter kardiologi ahli
-- **AUC-ROC: 0.99** — kemampuan diskriminasi yang nyaris sempurna
-- **Prototipe Streamlit interaktif langsung** yang di-deploy ke cloud
+Setiap folder mengeksplorasi keyakinan besar yang sama dari sudut yang berbeda:
 
-Ini membuktikan bahwa AI dapat melakukan segmentasi citra jantung setara ahli — **secara andal, instan, dan dalam skala besar**.
+#### 1. SPECT: CorVision
+Proyek ini berfokus pada **myocardial perfusion SPECT**, dengan tugas segmentasi ventrikel kiri dari citra medis 3D. Proyek ini menunjukkan bahwa AI dapat membantu mengotomatisasi workflow pencitraan yang sulit dan biasanya membutuhkan waktu serta perhatian ahli. Secara praktis, ini dapat mendukung analisis jantung yang lebih cepat dan evaluasi lanjutan yang lebih efisien.
 
-#### 🧠 2. bigP3BCI — EEG Motor Imagery (Neurologi / BCI)
-Brain-Computer Interface membuka pintu yang tadinya tertutup permanen. Bagi pasien dengan ALS, *locked-in syndrome*, atau cedera tulang belakang parah, kemampuan untuk berkomunikasi atau mengendalikan perangkat bantu melalui pikiran saja adalah hal yang mengubah hidup. Pipeline klasifikasi EEG kami menunjukkan bahwa AI dapat mendekode aksi motorik yang ingin dilakukan dari sinyal otak mentah — sebuah langkah kritis menuju **sistem BCI non-invasif dan real-time** yang dapat diakses di luar laboratorium neurologi khusus.
+#### 2. bigP3BCI
+Proyek ini berfokus pada **sinyal EEG untuk brain-computer interface**, terutama pada konteks pasien dengan keterbatasan motorik berat. Tujuannya adalah menunjukkan bahwa AI tetap dapat menangkap sinyal yang berkaitan dengan niat dari data EEG yang sulit, sehingga membuka jalan menuju sistem komunikasi bantu yang tetap bermakna meskipun kondisi fisiologis pasien menantang.
 
-#### 👁️ 3. Hillel Yaffe Glaucoma (Oftalmologi)
-Glaukoma menyebabkan kehilangan penglihatan yang tidak dapat dipulihkan, seringkali tidak terdeteksi hingga kerusakan signifikan telah terjadi. Dokter spesialis mata langka di daerah yang kekurangan sumber daya. Model klasifikasi citra fundus kami menunjukkan bahwa AI dapat melakukan skrining glaukoma dari foto retina rutin — memungkinkan **deteksi dini berskala populasi dengan biaya rendah** yang berpotensi mencegah jutaan kasus kebutaan yang seharusnya dapat dicegah di seluruh dunia.
+#### 3. Brugada
+Proyek ini berfokus pada **klasifikasi ECG 12-lead untuk sindrom Brugada**, yaitu kondisi klinis penting yang berkaitan dengan aritmia ventrikel dan sudden cardiac death. Di sini, pembuktiannya adalah bahwa AI dapat membantu mendeteksi pola jantung yang halus namun berisiko tinggi, serta mendukung peninjauan ECG berbasis risiko secara lebih dini.
 
----
-
-### 🔭 Visi untuk Masa Depan
-
-Ketiga proyek ini, diambil bersama-sama, menunjukkan sebuah pola:
-
-1. **AI belajar dari data berlabel ahli** — menyerap pengetahuan yang butuh bertahun-tahun bagi para dokter untuk kumpulkan.
-2. **AI menggeneralisasi ke pasien baru yang belum pernah dilihat** — dengan metrik kinerja yang mendekati atau setara dengan standar klinis.
-3. **AI di-deploy dalam skala besar** — model yang sudah dilatih dapat menjalankan inferensi pada ribuan pemindaian per detik, dengan biaya yang jauh lebih rendah dari konsultasi spesialis.
-
-Implikasinya sangat mendalam: **tidak setiap pasien di dunia perlu memiliki akses ke kardiolog, neurolog, atau dokter spesialis mata — mereka hanya perlu akses ke sebuah perangkat yang menjalankan model AI yang dilatih oleh seorang ahli.**
-
-Inilah janji AI dalam dunia medis. **Dawnbringer adalah buktinya.**
+#### 4. Hillel Yaffe Glaucoma
+Proyek ini berfokus pada **analisis citra fundus untuk deteksi glaukoma**. Proyek ini mendukung gagasan bahwa AI dapat memperluas akses skrining dini di bidang oftalmologi, terutama pada situasi ketika ketersediaan dokter spesialis terbatas dan keterlambatan diagnosis membawa dampak permanen.
 
 ---
 
-### ⚖️ Sangkalan
+### Inti Pembuktian yang Sedang Dibangun
 
-> ⚠️ **Semua proyek dalam repositori ini murni untuk keperluan akademis dan penelitian.** Tidak ada model, prototipe, atau alat yang disajikan di sini yang ditujukan untuk, atau seharusnya digunakan dalam, diagnosis klinis atau keputusan pengobatan tanpa pengawasan tenaga medis profesional yang berkualifikasi.
+Jika dilihat bersama, proyek-proyek ini dimaksudkan untuk mendukung empat klaim:
+
+1. **AI dapat belajar dari dataset biomedis resmi pada modalitas yang sangat berbeda.**
+2. **AI tetap dapat berguna walaupun data dasarnya noisy, heterogen, atau sangat sensitif terhadap kualitas.**
+3. **AI menjadi jauh lebih kredibel jika dipasangkan dengan validasi yang kuat, kalibrasi, interpretabilitas, dan metrik yang relevan secara klinis.**
+4. **AI dapat membawa harapan praktis dalam layanan kesehatan dengan membantu klinisi melakukan skrining lebih dini, meninjau hasil lebih cepat, dan memprioritaskan kasus berisiko tinggi dengan lebih efektif.**
+
+Karena itu, repositori ini sebaiknya dibaca sebagai **ruang proof-of-concept submission Dawnbringer untuk IDSC 2026**. Folder-folder di dalamnya adalah studi teknis individual, tetapi bersama-sama membangun satu argumen yang lebih besar.
+
+---
+
+### Sangkalan
+
+> **Semua proyek dalam repositori ini murni untuk keperluan akademis dan penelitian.** Tidak ada model, prototipe, atau alat di repositori ini yang ditujukan untuk diagnosis klinis atau keputusan pengobatan tanpa pengawasan tenaga medis profesional yang berkualifikasi.

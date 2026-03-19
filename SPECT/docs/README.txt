@@ -42,5 +42,5 @@ This study was approved by the institutional ethics committee under protocol num
 /
 ├── DICOM/                 # Raw SPECT images in DICOM format  
 ├── NIfTI/                 # Converted images in NIfTI format  
-├── segmentation_masks/   # Optional — predicted masks (if included)  
+├── segmentation_masks/   # Optional - predicted masks (if included)  
 ├── README.txt             # This file  
