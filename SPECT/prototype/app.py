@@ -337,7 +337,7 @@ def render_slice(img_slice, mask_slice=None, prob_slice=None, title="",
     return fig
 
 
-def inject_shell_effects(enable_reveal=False, scroll_top=False, enable_cursor=True):
+def inject_shell_effects(enable_reveal=False, scroll_top=False):
     """Attach persistent UI effects on the parent Streamlit document."""
     reveal_js = """
         if (!parentWin.__corvisionRevealObserver) {
@@ -365,18 +365,6 @@ def inject_shell_effects(enable_reveal=False, scroll_top=False, enable_cursor=Tr
             if (attempts > 10) clearInterval(scrollInterval);
         }, 50);
     """ if scroll_top else ""
-
-    cursor_visibility_js = """
-        const activeRing = doc.getElementById("cursor-ring");
-        if (activeRing) {
-            activeRing.style.display = "block";
-        }
-    """ if enable_cursor else """
-        const activeRing = doc.getElementById("cursor-ring");
-        if (activeRing) {
-            activeRing.style.display = "none";
-        }
-    """
 
     components.html(f"""
         <script>
@@ -413,80 +401,10 @@ def inject_shell_effects(enable_reveal=False, scroll_top=False, enable_cursor=Tr
             doc.addEventListener("mousemove", parentWin.__corvisionGlowMouseMove);
         }}
 
-        let ring = doc.getElementById("cursor-ring");
-        if (!ring) {{
-            ring = doc.createElement("div");
-            ring.id = "cursor-ring";
-            ring.style.cssText = `
-                position: fixed; width: 40px; height: 40px;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                pointer-events: none; z-index: 9999;
-                transform: translate(-50%, -50%);
-                transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s;
-            `;
-            doc.body.appendChild(ring);
+        const staleRing = doc.getElementById("cursor-ring");
+        if (staleRing) {{
+            staleRing.remove();
         }}
-
-        if (typeof parentWin.__corvisionMouseX !== "number") {{
-            parentWin.__corvisionMouseX = parentWin.innerWidth / 2;
-            parentWin.__corvisionMouseY = parentWin.innerHeight / 2;
-            parentWin.__corvisionCurrentX = parentWin.__corvisionMouseX;
-            parentWin.__corvisionCurrentY = parentWin.__corvisionMouseY;
-        }}
-
-        if (!parentWin.__corvisionCursorMouseMove) {{
-            parentWin.__corvisionCursorMouseMove = (e) => {{
-                parentWin.__corvisionMouseX = e.clientX;
-                parentWin.__corvisionMouseY = e.clientY;
-            }};
-            doc.addEventListener("mousemove", parentWin.__corvisionCursorMouseMove);
-        }}
-
-        if (!parentWin.__corvisionCursorHoverIn) {{
-            parentWin.__corvisionCursorHoverIn = (e) => {{
-                if (e.target.closest("button") || e.target.closest(".glass-card")) {{
-                    const activeRing = doc.getElementById("cursor-ring");
-                    if (!activeRing) return;
-                    activeRing.style.width = "70px";
-                    activeRing.style.height = "70px";
-                    activeRing.style.background = "rgba(255,255,255,0.05)";
-                    activeRing.style.border = "1px solid rgba(255,255,255,0.6)";
-                }}
-            }};
-            doc.addEventListener("mouseover", parentWin.__corvisionCursorHoverIn);
-        }}
-
-        if (!parentWin.__corvisionCursorHoverOut) {{
-            parentWin.__corvisionCursorHoverOut = (e) => {{
-                if (e.target.closest("button") || e.target.closest(".glass-card")) {{
-                    const activeRing = doc.getElementById("cursor-ring");
-                    if (!activeRing) return;
-                    activeRing.style.width = "40px";
-                    activeRing.style.height = "40px";
-                    activeRing.style.background = "transparent";
-                    activeRing.style.border = "1px solid rgba(255, 255, 255, 0.3)";
-                }}
-            }};
-            doc.addEventListener("mouseout", parentWin.__corvisionCursorHoverOut);
-        }}
-
-        if (parentWin.__corvisionCursorAnimationId) {{
-            parentWin.cancelAnimationFrame(parentWin.__corvisionCursorAnimationId);
-        }}
-
-        const animateCursor = () => {{
-            const activeRing = doc.getElementById("cursor-ring");
-            if (!activeRing) return;
-            parentWin.__corvisionCurrentX += (parentWin.__corvisionMouseX - parentWin.__corvisionCurrentX) * 0.2;
-            parentWin.__corvisionCurrentY += (parentWin.__corvisionMouseY - parentWin.__corvisionCurrentY) * 0.2;
-            activeRing.style.left = `${{parentWin.__corvisionCurrentX}}px`;
-            activeRing.style.top = `${{parentWin.__corvisionCurrentY}}px`;
-            parentWin.__corvisionCursorAnimationId = parentWin.requestAnimationFrame(animateCursor);
-        }};
-        animateCursor();
-
-        {cursor_visibility_js}
         {reveal_js}
         {scroll_js}
         </script>
@@ -668,7 +586,7 @@ def show_landing_page():
 
 def show_app_page():
     """Main application view for segmentation interactive UI."""
-    inject_shell_effects(scroll_top=True, enable_cursor=False)
+    inject_shell_effects(scroll_top=True)
     # Navigation Back Button
     if st.sidebar.button("← Back to Landing Page"):
         st.session_state.page = "landing"
