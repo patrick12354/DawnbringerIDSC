@@ -7,14 +7,28 @@ echo Menjalankan aplikasi Streamlit...
 echo (Aplikasi akan terbuka otomatis di browser Anda)
 echo.
 
-set VENV_PYTHON=%~dp0..\..\.venv\Scripts\python.exe
+set "SCRIPT_DIR=%~dp0"
+set "ROOT_VENV_PYTHON=%SCRIPT_DIR%..\.venv\Scripts\python.exe"
+set "LOCAL_VENV_PYTHON=%SCRIPT_DIR%.venv\Scripts\python.exe"
 
-if exist "%VENV_PYTHON%" (
-    "%VENV_PYTHON%" -m streamlit run "%~dp0prototype\app.py"
+if exist "%ROOT_VENV_PYTHON%" (
+    "%ROOT_VENV_PYTHON%" -m streamlit run "%SCRIPT_DIR%prototype\app.py"
+) else if exist "%LOCAL_VENV_PYTHON%" (
+    "%LOCAL_VENV_PYTHON%" -m streamlit run "%SCRIPT_DIR%prototype\app.py"
 ) else (
-    echo [ERROR] Virtual Environment tidak ditemukan di path:
-    echo "%VENV_PYTHON%"
-    echo Pastikan folder .venv masih ada di direktori utamanya.
+    echo [INFO] Virtual environment tidak ditemukan.
+    echo Mencoba memakai Python dari PATH...
+    py -m streamlit run "%SCRIPT_DIR%prototype\app.py" 2>nul
+    if errorlevel 1 (
+        python -m streamlit run "%SCRIPT_DIR%prototype\app.py" 2>nul
+    )
+    if errorlevel 1 (
+        echo [ERROR] Python/Streamlit belum siap dipakai.
+        echo Buat virtualenv dulu lalu install dependency:
+        echo   cd /d "%SCRIPT_DIR%"
+        echo   py -m venv ..\.venv
+        echo   ..\.venv\Scripts\python -m pip install -r prototype\requirements.txt
+    )
 )
 
 echo.

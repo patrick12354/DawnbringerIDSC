@@ -1,6 +1,6 @@
 # 👁️ CorVision: Left Ventricle Segmentation
 
-[![Live Interactive Prototype!](https://img.shields.io/badge/Live_Prototype-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://heartspect.streamlit.app/)
+[![Live Interactive Prototype!](https://img.shields.io/badge/Live_Prototype-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://spectprototype.streamlit.app/)
 
 *(Bagi pembaca berbahasa Indonesia, silakan gulir ke bawah untuk versi Bahasa Indonesia / For Indonesian readers, please scroll down for the Indonesian version).*
 
@@ -10,9 +10,9 @@ This project aims to build a Deep Learning model (using a 3D U-Net architecture)
 
 ---
 
-### 🚀 Quick Start: Web Prototype
+### 🚀 Quick Start: SPECT Web Prototype
 
-A ready-to-use local web prototype is provided to demonstrate the model's capabilities in real-time. It features a multi-plane 3D viewer, automatic inference, and a probability map (confidence overlay).
+A ready-to-use web prototype is provided specifically for the **SPECT project** to demonstrate the model's capabilities in real-time. It features a multi-plane 3D viewer, automatic inference, and a probability map (confidence overlay).
 
 1. **Install Dependencies**
    ```bash
@@ -31,7 +31,7 @@ A ready-to-use local web prototype is provided to demonstrate the model's capabi
 ### 📁 Repository Structure
 
 ```text
-heartSPECT/
+SPECT/
 ├── models/             ← Trained PyTorch checkpoints (e.g., best_model.pth)
 ├── prototype/          ← Streamlit web app UI & inference pipeline
 │   ├── app.py          ← Main Streamlit application
@@ -99,9 +99,9 @@ Proyek ini bertujuan untuk membangun model *Deep Learning* (menggunakan arsitekt
 
 ---
 
-### 🚀 Mulai Cepat: Prototipe Web
+### 🚀 Mulai Cepat: Prototipe Web SPECT
 
-Prototipe web lokal yang siap pakai disediakan untuk mendemonstrasikan kemampuan model secara *real-time*. Prototipe ini memiliki penampil 3D multi-bidang, inferensi otomatis, dan peta probabilitas (tingkat keyakinan model).
+Prototipe web disediakan secara khusus untuk **proyek SPECT** guna mendemonstrasikan kemampuan model secara *real-time*. Prototipe ini memiliki penampil 3D multi-bidang, inferensi otomatis, dan peta probabilitas (tingkat keyakinan model).
 
 1. **Instal Dependensi**
    ```bash
@@ -120,7 +120,7 @@ Prototipe web lokal yang siap pakai disediakan untuk mendemonstrasikan kemampuan
 ### 📁 Struktur Repositori
 
 ```text
-heartSPECT/
+SPECT/
 ├── models/             ← Checkpoint PyTorch terlatih (misal: best_model.pth)
 ├── prototype/          ← UI aplikasi web Streamlit & pipeline inferensi
 │   ├── app.py          ← Aplikasi utama Streamlit

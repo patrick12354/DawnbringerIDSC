@@ -2,8 +2,6 @@
 
 > *"Mathematics and Hope in Healthcare"*
 
-[![SPECT Prototype](https://img.shields.io/badge/Live_Demo-CorVision_SPECT-FF4B4B?style=for-the-badge&logo=streamlit)](https://heartspect.streamlit.app/)
-
 *(For Indonesian readers / Bagi pembaca berbahasa Indonesia, silakan gulir ke bawah untuk versi Bahasa Indonesia.)*
 
 ---
@@ -57,6 +55,9 @@ Each folder explores the same larger belief from a different angle:
 
 #### 1. SPECT: CorVision
 This project focuses on **myocardial perfusion SPECT**, where the task is to segment the left ventricle from 3D medical images. It demonstrates that AI can automate a difficult imaging workflow that normally requires time and expert attention. In practical terms, this can support faster cardiac analysis and more efficient downstream assessment.
+
+For this subproject only, a Streamlit prototype is also available:
+[CorVision SPECT Prototype](https://spectprototype.streamlit.app/)
 
 #### 2. bigP3BCI
 This project focuses on **EEG-based brain-computer interface signals**, especially in settings where patients may have severe motor limitations. The goal is to show that AI can still recover useful intention-related signals from difficult EEG data, opening the door to assistive communication systems that remain meaningful even under challenging physiological conditions.
@@ -138,6 +139,9 @@ Setiap folder mengeksplorasi keyakinan besar yang sama dari sudut yang berbeda:
 
 #### 1. SPECT: CorVision
 Proyek ini berfokus pada **myocardial perfusion SPECT**, dengan tugas segmentasi ventrikel kiri dari citra medis 3D. Proyek ini menunjukkan bahwa AI dapat membantu mengotomatisasi workflow pencitraan yang sulit dan biasanya membutuhkan waktu serta perhatian ahli. Secara praktis, ini dapat mendukung analisis jantung yang lebih cepat dan evaluasi lanjutan yang lebih efisien.
+
+Khusus untuk subproyek ini, tersedia juga prototype Streamlit:
+[CorVision SPECT Prototype](https://spectprototype.streamlit.app/)
 
 #### 2. bigP3BCI
 Proyek ini berfokus pada **sinyal EEG untuk brain-computer interface**, terutama pada konteks pasien dengan keterbatasan motorik berat. Tujuannya adalah menunjukkan bahwa AI tetap dapat menangkap sinyal yang berkaitan dengan niat dari data EEG yang sulit, sehingga membuka jalan menuju sistem komunikasi bantu yang tetap bermakna meskipun kondisi fisiologis pasien menantang.
