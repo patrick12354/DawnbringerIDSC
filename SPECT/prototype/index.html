@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CorVision | Vercel Demo</title>
+  <meta
+    name="description"
+    content="CorVision is a Vercel-ready frontend for left ventricle segmentation on cardiac SPECT imaging."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">
+          <img src="./assets/logo_transparent.png" alt="CorVision logo" class="eyebrow-logo" />
+          <span>CorVision for Vercel</span>
+        </div>
+        <h1>Cardiac SPECT segmentation frontend that is actually deployable on Vercel.</h1>
+        <p class="hero-text">
+          The original prototype was built in Streamlit and runs local PyTorch inference.
+          This version keeps the product experience on Vercel and moves heavy 3D inference
+          to a separate backend when needed.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#playground">Open Playground</a>
+          <a class="button button-secondary" href="#architecture">See Architecture</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <div class="panel-tag">Deployment reality</div>
+        <h2>Why the architecture changed</h2>
+        <p>
+          The checkpoint is about 67 MB and the app depends on PyTorch. That makes direct
+          Vercel serverless inference a poor fit. The Vercel layer should own the UI;
+          the inference runtime should live elsewhere.
+        </p>
+        <dl class="stats-grid">
+          <div>
+            <dt>Model</dt>
+            <dd>3D U-Net</dd>
+          </div>
+          <div>
+            <dt>Checkpoint</dt>
+            <dd>67 MB</dd>
+          </div>
+          <div>
+            <dt>Validation Dice</dt>
+            <dd>0.9055</dd>
+          </div>
+          <div>
+            <dt>Target</dt>
+            <dd>Left ventricle</dd>
+          </div>
+        </dl>
+      </aside>
+    </header>
+
+    <main>
+      <section class="section grid-section">
+        <article class="card">
+          <p class="card-kicker">What changed</p>
+          <h3>Static-first deployment</h3>
+          <p>
+            This folder now contains a Vercel-ready static frontend. It does not require
+            Streamlit to render the product shell.
+          </p>
+        </article>
+        <article class="card">
+          <p class="card-kicker">What stayed</p>
+          <h3>Local research workflow</h3>
+          <p>
+            The original Python files are still here, so local Streamlit and PyTorch-based
+            research workflows remain intact.
+          </p>
+        </article>
+        <article class="card">
+          <p class="card-kicker">What is next</p>
+          <h3>External inference API</h3>
+          <p>
+            When you have an inference backend, set its endpoint in <code>config.js</code>.
+            The frontend will start sending uploads there.
+          </p>
+        </article>
+      </section>
+
+      <section id="architecture" class="section">
+        <div class="section-heading">
+          <p class="section-label">Architecture</p>
+          <h2>Recommended deployment split</h2>
+        </div>
+        <div class="architecture-grid">
+          <article class="architecture-card">
+            <span class="architecture-step">01</span>
+            <h3>Vercel frontend</h3>
+            <p>
+              Hosts the landing page, upload UI, result cards, and API integration logic.
+            </p>
+          </article>
+          <article class="architecture-card">
+            <span class="architecture-step">02</span>
+            <h3>Inference service</h3>
+            <p>
+              Runs PyTorch, loads the checkpoint, performs preprocessing, and returns JSON
+              plus downloadable artifacts.
+            </p>
+          </article>
+          <article class="architecture-card">
+            <span class="architecture-step">03</span>
+            <h3>Storage layer</h3>
+            <p>
+              Optional blob/object storage for generated masks, probability maps, and audit artifacts.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="playground" class="section playground-section">
+        <div class="section-heading">
+          <p class="section-label">Playground</p>
+          <h2>Vercel-friendly product shell</h2>
+          <p class="section-copy">
+            If <code>inferenceApiUrl</code> is configured in <code>config.js</code>, uploads will
+            be sent to that endpoint. Until then, the page runs in demo mode and documents what the
+            backend should return.
+          </p>
+        </div>
+
+        <div class="playground-grid">
+          <form id="predict-form" class="upload-card">
+            <div class="status-box" id="backend-status">Checking configuration...</div>
+
+            <label class="field">
+              <span>DICOM file</span>
+              <input id="dicom-file" type="file" accept=".dcm" />
+            </label>
+
+            <label class="field">
+              <span>Segmentation threshold</span>
+              <input id="threshold" type="range" min="0.1" max="0.9" step="0.05" value="0.5" />
+              <strong id="threshold-value">0.50</strong>
+            </label>
+
+            <label class="field">
+              <span>Sample cases in repo</span>
+              <select id="sample-case">
+                <option value="">Choose a sample filename</option>
+              </select>
+            </label>
+
+            <div class="button-row">
+              <button id="submit-button" class="button button-primary" type="submit">
+                Send to Inference API
+              </button>
+              <button id="reset-button" class="button button-secondary" type="button">
+                Reset
+              </button>
+            </div>
+
+            <div class="info-note">
+              Expected backend behavior: accept a DICOM upload and threshold, then return metrics,
+              preview images, and optional download URLs for the mask and probability map.
+            </div>
+          </form>
+
+          <aside class="results-card">
+            <div class="results-header">
+              <p class="card-kicker">Response preview</p>
+              <h3>Inference status</h3>
+            </div>
+            <pre id="response-output">No request sent yet.</pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="section-label">Validation snapshot</p>
+          <h2>Research metrics preserved from the original project</h2>
+        </div>
+        <div class="metrics-grid">
+          <article class="metric-card">
+            <span>Dice</span>
+            <strong>0.9055</strong>
+          </article>
+          <article class="metric-card">
+            <span>IoU</span>
+            <strong>0.8286</strong>
+          </article>
+          <article class="metric-card">
+            <span>Sensitivity</span>
+            <strong>0.8947</strong>
+          </article>
+          <article class="metric-card">
+            <span>Specificity</span>
+            <strong>0.9988</strong>
+          </article>
+          <article class="metric-card">
+            <span>Precision</span>
+            <strong>0.9288</strong>
+          </article>
+          <article class="metric-card">
+            <span>HD95</span>
+            <strong>1.9076 mm</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="section-label">API contract</p>
+          <h2>Suggested JSON response shape</h2>
+        </div>
+        <pre class="contract-box">{
+  "caseName": "example.dcm",
+  "metrics": {
+    "voxelCount": 12345,
+    "maskRatio": 1.92,
+    "meanConfidence": 0.811,
+    "maxConfidence": 0.994
+  },
+  "previews": [
+    {
+      "title": "Axial overlay",
+      "imageUrl": "https://..."
+    },
+    {
+      "title": "Coronal overlay",
+      "imageUrl": "https://..."
+    }
+  ],
+  "downloads": {
+    "maskUrl": "https://...",
+    "probabilityMapUrl": "https://..."
+  }
+}</pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="./config.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>

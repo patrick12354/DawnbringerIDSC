@@ -1,90 +1,53 @@
-# 👁️ CorVision Prototype Engine
+# CorVision Vercel Frontend
 
-[![Try Live Prototype](https://img.shields.io/badge/TRY_LIVE_PROTOTYPE-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://spectprototype.streamlit.app/)
+Folder ini sekarang khusus untuk deployment frontend statis di Vercel.
 
-Web app prototype untuk segmentasi ventrikel kiri pada cardiac SPECT imaging menggunakan 3D U-Net.
+Struktur Streamlit lama sudah dihapus dari `SPECT/prototype`, sehingga folder ini tidak lagi memuat runtime Python, PyTorch, atau entrypoint Streamlit. Tujuannya sederhana: root deploy ini harus bersih dan jelas untuk static hosting di Vercel.
 
-## Cara Menjalankan
+## File Penting
 
-Setelah repo ini dipindahkan ke dalam folder `SPECT/`, jalankan semua perintah dari folder `SPECT`, bukan dari root repo lama.
+- `index.html`
+  Entry page aplikasi
+- `styles.css`
+  Styling utama
+- `main.js`
+  Logic form upload dan komunikasi ke backend inference
+- `config.js`
+  Konfigurasi endpoint inference
+- `vercel.json`
+  Konfigurasi deployment Vercel
+- `assets/`
+  Asset visual
+- `sample_data/`
+  Referensi nama file sample yang dipakai di UI
 
-### 1. Install Dependencies
+## Deploy ke Vercel
 
-```bash
-cd SPECT
-py -m venv ..\.venv
-..\.venv\Scripts\python -m pip install --upgrade pip
-..\.venv\Scripts\python -m pip install -r prototype/requirements.txt
+Set root directory project ke:
+
+```text
+SPECT/prototype
 ```
 
-Jika copy-paste di Windows PowerShell, pakai path ini tanpa spasi:
+Frontend ini tidak memerlukan build step khusus. `vercel.json` sudah disetel untuk static deployment.
 
-```powershell
-cd SPECT
-py -m venv ..\.venv
-..\.venv\Scripts\python -m pip install --upgrade pip
+## Konfigurasi Backend Inference
+
+Secara default frontend berjalan tanpa backend aktif. Untuk menghubungkan endpoint inference, edit `config.js`:
+
+```js
+window.CorVisionConfig = {
+  inferenceApiUrl: "https://your-inference-service.example.com/predict",
+  apiKey: "",
+  demoMode: true,
+  uploadFieldName: "dicom",
+  thresholdFieldName: "threshold"
+};
 ```
 
-Lalu:
+Jika `inferenceApiUrl` belum diisi, frontend tetap bisa dideploy dan dipakai sebagai landing page serta shell integrasi.
 
-```powershell
-..\.venv\Scripts\python -m pip install -r prototype\requirements.txt
-```
+## Catatan
 
-> **Note:** Untuk PyTorch dengan dukungan CUDA/GPU, install dari [pytorch.org](https://pytorch.org/get-started/locally/) sesuai konfigurasi PC:
-> ```bash
-> pip install torch --index-url https://download.pytorch.org/whl/cu118
-> ```
-
-### 2. Jalankan Aplikasi
-
-**Cara Paling Mudah (Windows):**
-Cukup *double-click* (klik ganda) file **`run_prototype.bat`** yang ada di folder `SPECT/`. Launcher akan mencoba memakai:
-- `IDSC/.venv`
-- `SPECT/.venv`
-- atau Python dari PATH
-
-**Cara Manual via Terminal:**
-```bash
-cd SPECT
-..\.venv\Scripts\python -m streamlit run prototype/app.py
-```
-
-Aplikasi akan otomatis terbuka di browser pada `http://localhost:8501`.
-
-### 3. Cara Pakai
-
-1. Pilih **"Upload DICOM"** untuk upload file `.dcm` baru, atau **"Use Sample Data"** untuk memilih dari data yang sudah ada
-2. Segmentasi akan berjalan otomatis
-3. Lihat hasil di 3 tab: **Multi-Plane Viewer**, **Segmentation Overlay**, dan **Probability Map**
-4. Download hasil prediksi sebagai file `.nii.gz`
-
-## Fitur
-
-| Fitur | Deskripsi |
-|-------|-----------|
-| **Upload DICOM** | Drag & drop file .dcm |
-| **Sample Data** | Pilih dari data yang sudah ada |
-| **Multi-Plane Viewer** | Axial, Coronal, Sagittal dengan slider |
-| **Segmentation Overlay** | Visualisasi mask di atas gambar SPECT |
-| **Probability Map** | Heatmap confidence model |
-| **Metrics Panel** | Voxel count, ratio, confidence |
-| **Export** | Download mask & probability map (.nii.gz) |
-| **Adjustable Threshold** | Ubah threshold segmentasi (default 0.5) |
-
-## Struktur File
-
-```
-prototype/
-├── app.py              ← Main Streamlit app
-├── model.py            ← UNet3D architecture
-├── utils.py            ← Preprocessing & inference
-├── requirements.txt    ← Dependencies
-└── README.md           ← File ini
-```
-
-## Prerequisite
-
-- Python 3.8+
-- Model checkpoint (`SPECT/models/best_model.pth`) harus sudah ada
-- **Dataset Penuh:** Jika ingin mencoba lebih dari 5 sampel data bawaan, kamu bisa mengunduh full dataset DICOM di sini: [PhysioNet: Myocardial Perfusion SPECT (1.0.0)](https://physionet.org/content/myocardial-perfusion-spect/get-zip/1.0.0/). Ekstrak ke folder `data/raw/DICOM/` untuk menggunakannya di luar sampel.
+- Inference model 3D U-Net tidak lagi dijalankan di folder ini.
+- Untuk produksi, backend inference sebaiknya dipisahkan ke service tersendiri yang memang cocok untuk PyTorch.
